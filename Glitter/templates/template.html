@@ -1,0 +1,157 @@
+<!-- This file, though outdated and presently inactive within the codebase, is being retained for reference purposes.
+     While its contents may not be actively utilized in the current implementation,
+     its preservation serves as a valuable resource for insights into past iterations, historical context, or potential future enhancements.
+     By maintaining this file, we ensure that a comprehensive record of our development journey is preserved,
+     enabling a deeper understanding of the code's evolution and facilitating informed decisions moving forward. 
+    -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/frame2.css' %}">
+</head>
+
+
+
+<body class="body">
+
+    <video id="video-container" playsinline autoplay muted loop>
+        <source src="{% static 'css/assets/BogusHandsomeGermanpinscher-mobile.mp4' %}" type="video/mp4">
+    </video>
+
+    <div id="content-wrapper" );">
+        <h1 class="h1">Glitter</h1>
+        <form id="user_input" action="" method="GET">
+            {% csrf_token %}
+            <input class="stock" placeholder="Stock name" id="search-box-ticker" name="search-box-ticker">
+            <input class="date" placeholder="Exp Date (YYYY-MM-DD)" id="search-box-exp" name="search-box-exp"
+                type="date">
+            <select class="range" name="price-range-select" id="price-range-select">
+                <option value="price-less-than">Less than...</option>
+                <option value="price-greater-than">Greater than...</option>
+                <option value="price-between">Between...</option>
+            </select>
+            <input class="Price" placeholder="Price" id="price-entry-one" name="price-entry-one" type="number">
+            <input class="second" placeholder="Price" id="price-entry-two" name="price-entry-two" style="display: none"
+                type="number">
+
+            <script>
+                const dropdown = document.getElementById('price-range-select');
+                const priceTwo = document.getElementById('price-entry-two');
+
+                dropdown.addEventListener('change', function () {
+                    const selectedOption = dropdown.value;
+
+                    if (selectedOption === 'price-between') {
+                        priceTwo.style.display = ''; // Show the input field
+                    } else {
+                        priceTwo.style.display = 'none'; // Hide the input field
+                    }
+                });
+            </script>
+
+            <button class="Search" type="submit">Search</button>
+        </form>
+        <div class="align">
+            <h3>Symbol: {{ company_symbol }}</h3>
+            <h3> Description: {{ company_data }}</h3>
+        </div>
+
+        <div>
+            <table class="table" id="table">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Strike Price</th>
+                        <th>Volume</th>
+                        <th>Expiration Date</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for x in valid_options %}
+                    <tr>
+                        {% for key, value in x.items %}
+                        <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <footer>
+            <span class="frame3-text17">
+                <span>
+                    <span>
+                        Attention Traders: The following pages may cause paradigm
+                        shifts, awaken the inner trader, and result in extraordinary
+                        wealth creation. Please fasten your seatbelts and keep your
+                        eyes on the charts at all times.
+                    </span>
+                    <br />
+                    <span></span>
+                    <br />
+                    <span>© 2023 Glitter, Inc. All rights reserved.</span>
+                    <br />
+                    <span>
+                        Disclaimer: this tool is provided to users for filtering price
+                        to liquidity and in no way provides investment
+                        recommendations.
+                    </span>
+                    <br />
+                    <span>
+                        Personal Data and Information: We protect the privacy of your
+                        information and will never share your data. Your data is
+                        protected with 256-bit SSL encryption and never stored on any
+                        phone, tablet, or computer. We take your privacy seriously.
+                    </span>
+                    <br />
+                    <span></span>
+                </span>
+        </footer>
+    </div>
+
+    <!-- <style>
+        /* Fullscreen video container styles */
+       
+        
+        #content-wrapper.slide-fade-in {
+            animation: slideFadeIn 2s;
+            animation-fill-mode: forwards;
+        }
+    
+        @keyframes slideFadeIn {
+            0% { 
+                opacity: 0; 
+                transform: translateX(100%); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateX(0); 
+            }
+        }
+    </style> -->
+
+    <!-- <script>
+        if (localStorage.getItem('transition') === 'true') {
+            document.getElementById('content-wrapper').classList.add('slide-fade-in');
+            localStorage.removeItem('transition');
+        }
+    </script> -->
+</body>
+
+
+
+
+</body>
+
+
+
+</html>

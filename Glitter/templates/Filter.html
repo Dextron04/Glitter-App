@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/Website.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>glitter | filter</title>
+</head>
+
+<body>
+
+  <!-- Header Section -->
+  <header class="header">
+    <div class="logo-container">
+      <a href="{% url 'display_home' %}" class="logo">Glitter Options</a>
+    </div>
+    <div class="navigation">
+      <a href="{% url 'display_about' %}" class="about-link">About</a>
+      <a href="https://twitter.com/glitteroptions?s=21&t=K2xvwYUI22wW4v2q4JbvMQ" target="_blank" class="twitter-link">
+        <i class="fa-brands fa-x-twitter"></i> Twitter</a>
+      <a href="https://discord.gg/7Xs3CTpH" target="_blank" class="discord-link">
+        <i class="fab fa-discord"></i> Discord</a>
+    </div>
+    <a href="{% url 'display_user_options' %}" class="button-container">
+      <button>
+        <span>Reset Filters</span>
+        <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="37" cy="37" r="35.5" stroke="black" stroke-width="3"></circle>
+          <path
+            d="M25 35.5C24.1716 35.5 23.5 36.1716 23.5 37C23.5 37.8284 24.1716 38.5 25 38.5V35.5ZM49.0607 38.0607C49.6464 37.4749 49.6464 36.5251 49.0607 35.9393L39.5147 26.3934C38.9289 25.8076 37.9792 25.8076 37.3934 26.3934C36.8076 26.9792 36.8076 27.9289 37.3934 28.5147L45.8787 37L37.3934 45.4853C36.8076 46.0711 36.8076 47.0208 37.3934 47.6066C37.9792 48.1924 38.9289 48.1924 39.5147 47.6066L49.0607 38.0607ZM25 38.5L48 38.5V35.5L25 35.5V38.5Z"
+            fill="black"></path>
+        </svg>
+      </button>
+    </a>
+  </header>
+
+  <!-- Tagline Section -->
+  <div class="headline">
+    <h2 class="tag">Use the power of our filter options and explore choices like never before to find your perfect
+      match!</h2>
+    <p class="instruction">Enter your choice of symbol, expiration date, and price</p>
+  </div>
+
+
+  <!-- Form to gather user input, using the GET method -->
+  <form class="user-form" id="user_input" action="" method="GET">
+    <div class="container-flex">
+      <div class="input-container">
+        <div class="input-row">
+
+          <div for="search-box-ticker" class="symbol">
+            <input id="search-box-ticker" name="search-box-ticker" type="text" class="input"
+              placeholder="Choose Symbol">
+            <select id="suggestionDropdown"></select>
+          </div>
+
+          <script>
+            const stockInput = document.getElementById('search-box-ticker');
+            // const suggestionBox = document.getElementById('suggestionBox');
+            const suggestionDropdown = document.getElementById('suggestionDropdown');
+
+            stockInput.addEventListener('input', async function () {
+              const searchTerm = stockInput.value;
+              console.log("Live Text: ", searchTerm);
+              // suggestionBox.innerHTML = '';
+              suggestionDropdown.innerHTML = '';
+
+              if (searchTerm.length > 0) {
+                try {
+                  const response = await fetch(`https://api.tradier.com/v1/markets/search?q=${searchTerm}&indexes=false`, {
+                    headers: {
+                      'Authorization': 'Bearer 9A8RGSU01G1cq0KOvOoCmgFie4Ft',
+                      'Accept': 'application/json'
+                    }
+                  });
+
+                  const data = await response.json();
+
+                  data.securities.security.forEach(item => {
+                    // const suggestionItem = document.createElement('div');
+                    const option = document.createElement('option');
+                    option.innerText = item.symbol;
+                    option.classList.add('option');
+                    option.addEventListener('click', () => {
+                      stockInput.value = item.symbol;
+                      // suggestionBox.innerHTML = '';
+                      option.value = item.symbol;
+                    });
+
+                    // suggestionBox.appendChild(suggestionItem);
+
+                    suggestionDropdown.appendChild(option);
+                  });
+                } catch (error) {
+                  console.error('Error fetching stock suggestions:', error);
+                }
+              }
+            });
+          </script>
+
+
+
+          <div class="price-container">
+            <select class="select-price input" id="select-price" name="price-range-select" id="price-range-select">
+              <option>Set a Price</option>
+              <option value="price-less-than">Less than...</option>
+              <option value="price-greater-than">Greater than...</option>
+              <option value="price-between">Between...</option>
+            </select>
+            <input class="input ticker" id="price-entry-one" name="price-entry-one" type="number" placeholder="no.">
+            <input class="input ticker" id="price-entry-two" name="price-entry-two" style="display: none" type="number">
+          </div>
+
+          <div for="search-box-exp" class="expdate">
+            <input id="search-box-exp" name="search-box-exp" type="date" class="input">
+          </div>
+        </div>
+      </div>
+
+      <input type="submit" class="search-btn" value="Search">
+
+      <script>
+        const dropdown = document.getElementById('select-price'); // Correct ID here
+        const priceTwo = document.getElementById('price-entry-two');
+
+        dropdown.addEventListener('change', function () {
+          const selectedOption = dropdown.value;
+          if (selectedOption === 'price-between') {
+            priceTwo.style.display = ''; // Show the input field
+          } else {
+            priceTwo.style.display = 'none'; // Hide the input field
+          }
+        });
+      </script>
+    </div>
+  </form>
+
+
+  <!-- TABLE NOT READY -->
+
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Results</th>
+        <th>Symbol</th>
+        <th>Company</th>
+        <th>Price</th>
+        <th>Strike-Price</th>
+        <th>Volume</th>
+        <th>Expiration Date</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for x in paginated_options %}
+      <tr>
+        {% for key, value in x.items %}
+        <td>
+          <div class="cell-content">
+            {{ value }}
+          </div>
+        </td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Pagination Links -->
+  <div class="pagination">
+    <span class="step-links">
+      {% if paginated_options.has_previous %}
+      <a
+        href="?{% for key, value in request.GET.items %}{% if not forloop.first %}&{% endif %}{{ key }}={{ value }}{% endfor %}&page=1">&laquo;
+        first</a>
+      <a
+        href="?{% for key, value in request.GET.items %}{% if not forloop.first %}&{% endif %}{{ key }}={{ value }}{% endfor %}&page={{ paginated_options.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+        Page {{ paginated_options.number }} of {{ paginated_options.paginator.num_pages }}.
+      </span>
+
+      {% if paginated_options.has_next %}
+      <a
+        href="?{% for key, value in request.GET.items %}{% if not forloop.first %}&{% endif %}{{ key }}={{ value }}{% endfor %}&page={{ paginated_options.next_page_number }}">next</a>
+      <a
+        href="?{% for key, value in request.GET.items %}{% if not forloop.first %}&{% endif %}{{ key }}={{ value }}{% endfor %}&page={{ paginated_options.paginator.num_pages }}">last
+        &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+
+
+
+
+  <!-- Footer Section -->
+  <footer>
+    <p>
+    <h4>glitter-fund</h4>
+    </p>
+    <p>Attention Traders: The following pages may cause paradigm shifts, awaken the inner trader, and result in
+      extraordinary wealth creation. Please fasten your seatbelts and keep your eyes on the charts at all times.</p>
+    <p>Disclaimer: this tool is provided to users for filtering price to liquidity and in no way provides investment
+      recommendations.</p>
+    <p>Personal Data and Information: We protect the privacy of your information and will never share your data. Your
+      data is protected with 256-bit SSL encryption and never stored on any phone, tablet, or computer. We take your
+      privacy seriously.</p>
+    <p>© 2023 glitter, Inc. All rights reserved.</p>
+  </footer>
+</body>
+
+</html>
