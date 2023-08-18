@@ -1,0 +1,1081 @@
+@font-face {
+  font-family: 'Anybody';
+  src: url('./Anybody-1.111/fonts/variable/Anybody[ital,wdth,wght].ttf') format('truetype')
+}
+
+  
+body {
+    font-family: 'Anybody';
+    position: relative;
+    z-index: 0;
+    color: black;        
+    display: block; /* Changed from flex to block */
+    align-items: none; /* Removed center alignment */
+    justify-content: none; /* Removed center justification */
+    min-height: 100vh; 
+    margin: 0;
+    padding: 0;
+    padding-top: 70px; /* Changed from margin-top to padding-top to avoid hidden content under the fixed header */
+    background: #f2fbfb7d;
+}
+
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-y: auto; /* Allow vertical scroll */
+}
+
+/* Footer styles */
+footer {
+  bottom: 0;
+  left: 0;  
+  width: 100%;
+  background-color: #525E75;   /* or any color you prefer */
+  color: #fffbfb;                   /* or any color you prefer */
+  text-align: center;
+  padding: 5px;
+  font-size: 0.8em;
+}
+
+
+/* Header styles */
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.7em;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  flex-wrap: wrap;
+  background: linear-gradient(135deg, #1afbf07d, #d900ff5d);
+  height: 40px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+}
+
+ .header a {
+  padding: 0.5em 1em;
+}
+
+.navigation{
+  width: 24em;
+  margin-right: auto;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+}
+
+/* Align navigation links horizontally */
+.navigation a {
+  margin: 0 0.5em;
+}
+
+.header a, 
+.header button {
+  margin: auto 0; 
+}
+
+
+/* Glitter Logo styles */
+.logo {
+    font-size: 20px;
+    color: black;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+    position: relative;
+    border: none;
+    background: none;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: color;
+    font-variation-settings: 'wght' 700, 'wdth' 100; /* Adjust the values (100 to 900) for different weight and width */
+}
+
+.logo-container {
+  margin-left: 15em; /* Add some left margin to move the logo inward */
+  margin-right: 1em; /* Add some right margin to move the logo inward */
+}
+  
+.logo:focus, .logo:hover {
+  box-shadow: #ffffff7d 0px 8px 10px;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+  
+.logo:focus:after, .logo:hover:after {
+    width: 100%;
+    left: 0%;
+}
+
+.logo:after {
+    content: "";
+    pointer-events: none;
+    bottom: 1px; /* Adjust the value to control the space between text and underline */
+    left: 50%;
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background-color: rgb(255, 255, 255);
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: width, left;
+}
+  
+
+ /* About Us Navigation styles */
+.about-link {
+    text-decoration: none;          /* Remove underline from links */
+    color: rgb(0, 0, 0);   
+    font-size: 1em;               /* Increase the text size. Adjust as needed. */
+    line-height: 1.2;               /* Link color */
+    margin: 0 10px;  
+    position: relative;
+    border: none;
+    background: none;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: color; 
+    font-variation-settings: 'wght' 700, 'wdth' 100; /* Adjust the values (100 to 900) for different weight and width */
+}
+  
+.about-link:focus, .about-link:hover {
+    /* color: black; */
+    box-shadow: #ffffff7d 0px 8px 10px;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+  
+.about-link:focus:after, .about-link:hover:after {
+    width: 100%;
+    left: 0%;
+}
+
+.about-link:after {
+  content: "";
+  pointer-events: none;
+  bottom: 1px;
+  left: 50%;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: rgb(255, 255, 255);
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: width, left;
+}
+
+
+/* Twitter Navigation styles */
+.twitter-link {
+  text-decoration: none;          /* Remove underline from links */
+  color: rgb(0, 0, 0);   
+  font-size: 1em;               /* Increase the text size. Adjust as needed. */
+  line-height: 1.2;               /* Link color */
+  margin: 0 10px;   
+  position: relative;
+  border: none;
+  background: none;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: color; 
+  font-variation-settings: 'wght' 700, 'wdth' 100; /* Adjust the values (100 to 900) for different weight and width */
+}
+
+.twitter-link:focus, .twitter-link:hover {
+  box-shadow: #ffffff7d 0px 8px 10px;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.twitter-link:focus:after, .twitter-link:hover:after {
+  width: 100%;
+  left: 0%;
+}
+
+.twitter-link:after {
+  content: "";
+  pointer-events: none;
+  bottom: 1px;
+  left: 50%;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: #ffffff;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: width, left;
+}
+
+
+/* Discord Navigation styles */
+.discord-link {
+  text-decoration: none;          /* Remove underline from links */
+  color: hsl(0, 0%, 0%);   
+  font-size: 1em;               /* Increase the text size. Adjust as needed. */
+  line-height: 1.2;               /* Link color */
+  margin: 0 10px;   
+  margin-right: 1em; /* This adds space around each link in the navigation */
+  position: relative;
+  border: none;
+  background: none;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: color; 
+  font-variation-settings: 'wght' 700, 'wdth' 100; /* Adjust the values (100 to 900) for different weight and width */
+}
+
+.discord-link:focus, .discord-link:hover {
+  /* color: RGB(114, 137, 217); */
+  box-shadow: #ffffff7d 0px 8px 10px;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.discord-link:focus:after, .discord-link:hover:after {
+  width: 100%;
+  left: 0%;
+}
+
+.discord-link:after {
+  content: "";
+  pointer-events: none;
+  bottom: 1px;
+  left: 50%;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  /* background-color: RGB(114, 137, 217); */
+  background-color: #ffffff;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: width, left;
+}
+
+
+/* Make logo and navigation stack on small screens */
+@media (max-width: 768px) {
+  .logo, 
+  .navigation {
+    flex: 1 100%;
+    text-align: center;
+  }
+}
+  
+
+/* Start Filtering Button styles */
+button {
+  cursor: pointer;
+  font-weight: 500;
+  font-family: 'Anybody';
+  font-variation-settings: 'wght' 700, 'wdth' 100; /* Adjust the values (100 to 900) for different weight and width */
+  transition: all .2s;
+  padding: 1px 20px;
+  border-radius: 100px;
+  background: #cfef00;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  font-size: 1em;
+  border-bottom: 0;
+}
+
+/* Apply no text decoration to the anchor inside the button */
+button a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Container for the button */
+.button-container {
+  margin-left: 1em; /* Add some left margin to move the button inward */
+  margin-right: 15em; /* Add some right margin to move the button inward */
+  text-decoration: none;
+}
+
+button:hover {
+  background: #c4e201;
+}
+
+button > svg {
+  width: 34px;
+  margin-left: 10px;
+  transition: transform .3s ease-in-out;
+}
+
+button:hover svg {
+  transform: translateX(5px);
+}
+
+button:active {
+  transform: scale(0.95);
+} 
+
+@media (max-width: 768px) {   /* Make button fixed width on small screens */  
+  button {
+    width: 100px;
+  }
+}
+
+
+/* Tagline Content Styles*/  
+.content {
+    flex: 1; /* This ensures the body takes up the remaining space */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center; /* This centers the text of each element */
+    width: 100%;
+    padding-bottom: 50px; /* Adding padding at the bottom of the content */
+}
+  
+.content h1, .content p {
+    color: black; /* Makes the text color of content white */
+    margin-top: 50px; /* Adding margin at the top of h1 and p tags */
+    margin-bottom: -22px; /* Adding margin at the bottom of h1 and p tags */
+}
+
+.home1 {
+  font-family: 'Anybody', sans-serif;
+  font-size: 3em; /* Increase the text size. Adjust as needed. */
+  font-variation-settings: 'wght' 700, 'wdth' 100; /* Adjust the values (100 to 900) for different weight and width */
+  line-height: 1.2; /* Adjust the line-height as per requirement */
+  width: 100%; /* Full width */
+}
+
+.p9 {
+  font-size: 1.2em; /* Increase the text size. Adjust as needed. */
+  font-variation-settings: 'wght' 600, 'wdth' 100; /* Adjust the values (100 to 900) for different weight and width */
+  line-height: 1.2; /* Adjust the line-height as per requirement */
+  width: 100%; /* Full width */
+}
+
+/* Gradient hover effect for .home1 and .p9 */
+.home1, .p9 {
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: background-color;
+  background: linear-gradient(135deg, #1afbf0e6, #d900ffc8);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.home1:focus, .home1:hover, .p9:focus, .p9:hover {
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  border-inline-color: transparent;
+}
+
+/* Animation styles for :after pseudo-element */
+.home1:after, .p9:after {
+  content: "";
+  pointer-events: none;
+  bottom: -2px;
+  left: 50%;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: RGB(114, 137, 217);
+  transition: width 400ms cubic-bezier(0.25, 0.8, 0.25, 1), left 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+
+/* Video Content Style  */
+.video10 {
+  width: 100%; 
+  height: 70vh;
+  display: block;
+  object-fit: cover;
+  position: relative;
+  bottom: 0; /* Position the video at the bottom of the parent container  */
+  left: 0;  
+} 
+
+
+/* Services we provide styles */
+.service h1 {
+  color: black; /* Makes the text color of content white */
+}
+
+.heading1 {
+  text-align: center;
+  font-size: 3em;
+  font-variation-settings: 'wght' 700, 'wdth' 100;
+  line-height: 1.2;
+  width: 100%;
+  margin-top: 50px;
+  color: black; /* Set the initial text color to black */
+}
+
+.heading1:hover {
+  background: linear-gradient(135deg, #1afbf0e6, #d900ffc8);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* Make the text transparent to show the gradient */
+  border-inline-color: transparent; /* For browsers other than Safari */
+  transition: text-fill-color 400ms cubic-bezier(0.25, 0.8, 0.25, 1); /* Add transition for color change */
+}
+
+.heading1:after {
+  content: "";
+  pointer-events: none;
+  bottom: -2px;
+  left: 50%;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: RGB(114, 137, 217);
+  transition: width 400ms cubic-bezier(0.25, 0.8, 0.25, 1), left 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.grid-container2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  
+  gap: 60px;  
+  padding: 20px;
+  margin-bottom: 50px;
+  height: auto;
+  transition: box-shadow .3s ease, transform .2s ease;
+  /* Add positioning properties */
+  position: relative;
+  top: 50px; /* Adjust the value to move the container up or down */
+  left: 50px; /* Adjust the value to move the container left or right */
+}
+
+.grid-item2 {
+  width: 80%;
+  height: 180px;
+  padding: 12px;
+  font-size: 1.1em; /* Increase the text size. Adjust as needed. */
+  text-align: center; /* Align the text to the center */
+  justify-content: center; /* Justify the text (applies to multi-line text) */
+  line-height: 1.2; /* Adjust the line-height as per requirement */
+  background: #64dce47d;
+  /* border-radius: 23px; */
+  box-shadow: #64dce47d 0px 8px 10px;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  /* box-shadow: rgba(89, 87, 87, 0.17) 0px -23px 25px 0px inset,
+   rgba(95, 94, 94, 0.15) 0px -36px 30px 0px inset, rgba(101, 98, 98, 0.1) 0px -79px 40px 0px inset,
+    rgba(92, 90, 90, 0.06) 0px 2px 1px, rgba(100, 98, 98, 0.09) 0px 4px 2px, rgba(99, 97, 97, 0.09) 0px 8px 4px,
+     rgba(100, 98, 98, 0.09) 0px 16px 8px, rgba(110, 107, 107, 0.09) 0px 32px 16px; */
+  transition-property: background-color;
+  background: linear-gradient(135deg, #1afbf0e6, #d900ffc8);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.grid-item2:hover {
+  box-shadow: #d900ff5d 0px 12px 20px;
+  transform: translateY(-5%); 
+}
+
+.h3 {
+  text-align: justify; /* Center align the text */
+  line-height: 1.2; /* Adjust the line-height as per requirement */
+  width: 100%; /* Full width */
+  justify-content: center; /* Justify the text (applies to multi-line text) */
+}
+
+
+/* Learn More styles */
+.secret h2 {
+  color: black; /* Makes the text color of content white */
+}
+
+.heading2 {
+  text-align: center;
+  font-size: 3em;
+  font-variation-settings: 'wght' 700, 'wdth' 100;
+  line-height: 1.2;
+  width: 100%;
+  margin-top: 170px;
+  color: black; /* Set the initial text color to black */
+}
+
+.heading2:hover {
+  background: linear-gradient(135deg, #1afbf0e6, #d900ffc8);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* Make the text transparent to show the gradient */
+  border-inline-color: transparent; /* For browsers other than Safari */
+  transition: text-fill-color 400ms cubic-bezier(0.25, 0.8, 0.25, 1); /* Add transition for color change */
+}
+
+.heading2:after {
+  content: "";
+  pointer-events: none;
+  bottom: -2px;
+  left: 50%;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: RGB(114, 137, 217);
+  transition: width 400ms cubic-bezier(0.25, 0.8, 0.25, 1), left 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Add a container for the FAQ elements */
+.faq-container {
+  display: flex; /* Use Flexbox layout */
+  justify-content: space-between; /* Distribute elements with equal spacing in between */
+  margin-top: 7em;
+  margin-left: 5em;
+  margin-right: 5em;
+  margin-bottom: 5em;
+}
+
+/* Common styles for all the faq elements */
+.faq1, .faq2, .faq3 {
+  cursor: pointer;
+  width: 350px;
+  height: 400px;
+  background: rgb(255, 255, 255);
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 255, .2);
+  transition: all .2s;
+  box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+  display: flex; /* Use flexbox layout to align content vertically */
+  flex-direction: column; /* Stack the elements vertically inside the card */
+  align-items: left; /* Center the content horizontally */
+  padding: 20px; /* Add some padding to create space for text content */
+}
+
+.faq1:hover, .faq2:hover, .faq3:hover {
+  box-shadow: -12px 12px 2px -1px rgba(0, 0, 255, .2);
+}
+
+/* Style the heading and paragraph inside the faq cards */
+.faq1 h2, .faq2 h2, .faq3 h2 {
+  font-size: 1.3em;
+  margin-bottom: 10px;
+  align-items: left; /* Center the content horizontally */
+}
+
+.faq1 p, .faq2 p, .faq3 p {
+  font-size: 1.1em;
+  text-align: left;
+}
+
+
+/* About Content Styles*/  
+.about {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 50px;
+  position: relative;
+  margin-bottom: -22px;
+  color: black;
+  margin-top: 3em;
+  background-color: #ffffff;
+}
+
+.about1 {
+  font-size: 3em;
+  font-variation-settings: 'wght' 700, 'wdth' 100;
+  line-height: 1.2;
+  width: 100%;
+  position: relative;
+  margin-left: 5.2em;
+}
+
+.about1:hover {
+  background: linear-gradient(135deg, rgba(26, 251, 240, 0.9), rgba(217, 0, 255, 0.9));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: color 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.about1:hover:after {
+  width: 100%;
+  left: 0%;
+}
+
+.image {
+  /* Set the maximum width and height to 100% to keep the aspect ratio */
+  max-width: 350px; /* Adjust the width as needed */
+  max-height: 250px; /* Adjust the height as needed */
+  margin-left: 55em;
+  /* Position the image within the container */
+  position: absolute;
+  top: 55%; /* Adjust the top value to vertically center the image */
+  left: 20%; /* Adjust the left value to horizontally center the image */
+  transform: translate(-50%, -50%); /* Center the image using transform */
+}
+
+
+.vision {
+  flex: 1; /* This ensures the body takes up the remaining space */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align the content to the top (vertically aligned to the start) */
+  text-align: left; /* This centers the text of each element */
+  width: 100%;
+  padding-top: 50px; /* Adding padding at the top of the content */
+  padding-bottom: 50px; /* Adding padding at the bottom of the content */
+  max-width: 2200px; /* Set the maximum width of the container */
+  background-color: #ffffff;
+}
+
+.vision h2, .vision p {
+  margin-top: 20px; /* Move vision1 up by 20 pixels */
+  text-align: left;
+}
+
+.vision1 {
+  font-size: 1.7em;
+  font-variation-settings: 'wght' 700, 'wdth' 100;
+  line-height: 1.2;
+  width: 100%;
+  position: relative;
+  margin-left: 4.5em;
+}
+
+.vision1::after {
+  content: "";
+  position: absolute;
+  bottom: -10px; /* Adjust the value to control the space between text and underline */
+  left: 0;
+  width: 12%;
+  border-bottom: 1px solid; /* Adjust the thickness, color, and style as needed */
+}
+
+.p2, .p3 {
+  font-size: 0.9em; /* Increase the text size. Adjust as needed. */
+  font-variation-settings: 'wght' 400, 'wdth' 100; /* Adjust the values (100 to 900) for different weight and width */
+  line-height: 1.2; /* Adjust the line-height as per requirement */
+  width: 70%; /* Full width */
+  margin-left: 8.5em;
+}
+
+.email-button {
+  font-variation-settings: 'wght' 600, 'wdth' 100; /* Adjust the values (100 to 900) for different weight and width */
+  line-height: 2; /* Adjust the line-height as per requirement */
+  margin-left: 7em;  
+  cursor: pointer;
+  font-family: 'Anybody';
+  font-variation-settings: 'wght' 700, 'wdth' 100;
+  transition: all .2s;
+  padding: 5px 20px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  font-size: 1em;
+  color: #234567;
+  text-decoration: none;
+  position: relative; /* Add this line for positioning the background circle */
+}
+
+.email-button:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  border-radius: 50px;
+  background: #b1dae7;
+  width: 45px;
+  height: 40px;
+  transition: all 0.3s ease;
+}
+
+.email-button span {
+  position: relative;
+  font-size: 15px;
+  letter-spacing: 0.05em;
+}
+
+.email-button:hover:before {
+  width: 100%;
+  background: #b1dae7;
+  border-bottom: 1px solid; /* Adjust the thickness, color, and style as needed */
+}
+
+
+/* Navigation styles for Twitter and Discord icons */
+.socials {
+  display: flex;
+  margin-left: 6.7em; /* Adjust this value as needed */
+  margin-top: 1em;
+  padding: 5px 20px;
+  color: #234567;
+  text-decoration: none;
+  position: relative;
+}
+
+.twitter-icon,
+.discord-icon {
+  text-decoration: none;
+  color: #000;
+  font-size: 1.5em;
+  line-height: 1.2;
+  position: relative;
+  background: none;
+  transition: all 0.3s ease;
+  margin-right: 17px; /* Adjust this value as needed */
+}
+
+.twitter-icon:focus:after,
+.twitter-icon:hover:after,
+.discord-icon:focus:after,
+.discord-icon:hover:after {
+  width: 100%;
+  left: 0%;
+}
+
+.twitter-icon:focus, .twitter-icon:hover {
+  color: #000000;
+}
+
+.discord-icon:focus, .discord-icon:hover {
+  color: RGB(114, 137, 217);
+}
+
+
+/* Styling for the wrapper with white background */
+.wrapper {
+  position: relative;
+  background-color: #ffffff; /* Set the background color to white */
+}
+
+/* Team Story Styles */
+.team {
+  position: relative; /* Add this to make the .team container a positioning context */
+  display: flex;
+  align-items: flex-start; /* Align the content to the left side */
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  max-width: 1000px; /* Adjust the max-width as per your layout */
+  margin: 0 auto; /* Center the .team container */
+  margin-left: 7em;
+}
+
+.team::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff; /* Set the background color to white */
+  z-index: -1;
+}
+
+.team-content {
+  display: flex;
+  align-items: flex-start; /* Align the image and text container to the top */
+}
+
+.team-image {
+  max-width: 500px; /* Set the desired width for the image */
+  margin-right: 5em; /* Add some space between the image and the text */
+}
+
+.text-container {
+  flex: 1; /* Allow the text container to take up the remaining space */
+}
+
+.team h1, .team p {
+  margin-top: 20px; 
+  text-align: left;
+}
+
+.teams {
+  font-family: 'Anybody', sans-serif;
+  font-size: 1.7em;
+  font-variation-settings: 'wght' 700, 'wdth' 100;
+  line-height: 1.2;
+}
+
+.teams::after {
+  content: "";
+  display: block;
+  width: 35%; /* Set the width to 100% to cover the entire width of the text */
+  border-bottom: 1px solid;
+  margin-top: 10px; /* Add some spacing between h1 and p */
+}
+
+.p4 {
+  font-size: 0.9em; /* Increase the text size. Adjust as needed. */
+  font-variation-settings: 'wght' 400, 'wdth' 100; /* Adjust the values (100 to 900) for different weight and width */
+  line-height: 1.2; /* Adjust the line-height as per requirement */
+}
+
+
+
+/* Filter Content Styles */  
+.headline {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  padding-bottom: 50px;
+}
+
+/* Apply the same styles to .headline h2 and .headline p */
+.headline h2, .headline p {
+  color: black;
+  margin-top: 50px;
+  margin-bottom: -22px;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: background-color;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+/* Apply the same styles for .tag and .instruction to .headline h2 and .headline p */
+.tag {
+  font-family: 'Anybody', sans-serif;
+  font-size: 1.5em;
+  font-variation-settings: 'wght' 700, 'wdth' 100;
+  line-height: 1;
+  width: 100%;
+}
+
+.instruction {
+  font-size: 1.2em;
+  font-variation-settings: 'wght' 600, 'wdth' 100;
+  line-height: 1.2;
+  width: 100%;
+}
+
+/* Gradient hover effect for .tag and .instruction */
+.tag:hover, .instruction:hover {
+  background-position: 100% 0;
+  background-image: linear-gradient(135deg, #1afbf0e6, #d900ffc8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Animation styles for :after pseudo-element */
+.tag:hover::after, .instruction:hover::after {
+  content: "";
+  pointer-events: none;
+  bottom: -2px;
+  left: 50%;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: RGB(114, 137, 217);
+  transition: width 400ms cubic-bezier(0.25, 0.8, 0.25, 1), left 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+
+/* Flex container for input */
+.container-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Adjust alignment as needed */
+  width: 100%;
+}
+
+/* Container for input boxes */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+/* Common styles for inputs */
+.input { /* Add select-price class here */
+  color: #000000;
+  font-size: 0.9rem;
+  font-family: 'Anybody', sans-serif; /* Add your font family here */
+  background-color: transparent;
+  width: 100%;
+  box-sizing: border-box;
+  padding-inline: 0.5em;
+  padding-block: 1em;
+  border: none;
+  border-bottom: 2px solid var(--border-before-color);
+  box-shadow: #64dce47d 10px 8px 10px;
+}
+
+/* Apply hover effect to input boxes */
+.input:hover {
+  box-shadow: rgba(217, 0, 255, 0.36) 10px 12px 20px;
+  transform: translateY(-5%);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.symbol, 
+.price-container,
+.expdate {
+  flex: 1;
+  margin: 0 auto; /* This will evenly distribute space around the elements */
+  display: flex; /* Align contents horizontally */
+  margin-right: 5em; /* Add space between select and input */
+}
+
+.input,
+.select-price {
+  border: none;
+  border-bottom: 2px solid #ccc;
+  border-radius: 3px;
+  flex: 1; /* Distribute available space equally between the select and input */
+  margin-right: 10px; /* Add space between select and input */
+  text-align: center;
+}
+
+/* Increase the width and height of select-price */
+.select-price {
+  width: 12em; /* Adjust the width as needed */
+}
+
+.search-btn {
+  color: #000000;
+  font-size: 0.9rem;
+  font-family: 'Anybody', sans-serif; /* Add your font family here */
+  background-color: transparent;
+  width: 100%;
+  box-sizing: border-box;
+  padding-inline: 1.5em;
+  padding-block: 1em;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  border-radius: 3px;
+  flex: 1;
+  box-shadow: #64dce47d 10px 8px 10px; 
+  margin-right: 10em; /* Add space between select and input */
+}
+
+/* Apply hover effect to input boxes */
+.search-btn:hover {
+  box-shadow: rgba(217, 0, 255, 0.36) 10px 12px 20px;
+  transform: translateY(-5%);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+
+
+.custom-table {
+	position: relative;
+    top: 9px;
+    /* left: 50%; */
+    /* transform: translate(-50%, -50%); */
+    height: 60%;
+    width: 100%;
+    background: linear-gradient(135deg, #1afbf07d, #d900ff5d);
+    font-family: 'Anybody', sans-serif;
+    font-weight: 200;
+}
+
+table {
+	width: 800px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  margin-bottom: 1em;
+}
+
+th, td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: #000000;
+  text-align: center;
+}
+
+tbody tr:hover {
+  background-color: rgba(255,255,255,0.3);
+}
+
+td {
+  position: relative;
+}
+
+.cell-content {
+  padding: 15px;
+  background-color: rgba(255,255,255,0.2);
+  color: #000000;
+  text-align: center;
+}
+
+.cell-content:hover::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -9999px;
+  bottom: -9999px;
+  background-color: rgba(255,255,255,0.2);
+  z-index: -1;
+}
+
+thead {
+	th {
+		background-color: #55608f;
+	}
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-number,
+.prev-button,
+.next-button {
+  padding: 10px 10px;
+  cursor: pointer;
+}
+
+.page-number:hover {
+  background-color: #f2f2f2;
+}
+
+.prev-button,
+.next-button {
+  font-weight: bold;
+}
+
+.prev-button:hover,
+.next-button:hover {
+  background-color: #ddd;
+}
+
+#suggestionBox {
+  position: absolute;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.suggestion {
+  padding: 5px;
+  cursor: pointer;
+}
