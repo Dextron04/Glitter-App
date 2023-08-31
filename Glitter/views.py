@@ -3,6 +3,8 @@ from django.shortcuts import render
 import requests
 import json
 from django.core.paginator import Paginator
+import datetime
+from datetime import datetime, date
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
 
@@ -19,6 +21,34 @@ def display_about(request):
 
 def handle_invalid_url(request, invalid_url):
     return render(request, 'error.html', {'error_message': f'The URL "{invalid_url}" is not valid.'})
+
+# Creates a list of available dates starting from the first upcoming friday
+def create_friday_list(request):
+    print("[DEBUG] CREATING FRIDAY LIST")
+    currentDate = date.today()
+
+    # increment until friday if it's not already friday
+    while currentDate.weekday() != 4:
+        currentDate += datetime.timedelta(days=1)
+    
+    friday_list = [currentDate.strftime("%A %B %d")]
+    for i in range(0, 19): # up to 20 weeks in advance
+        # add one week to date object
+        currentDate += datetime.timedelta(days=7)
+
+        # date format: %A = day of week, %B = month, %d = day of the month
+        readableDate = currentDate.strftime("%A %B %d")
+        print(readableDate)
+        friday_list.append(readableDate)
+
+    print("[DEBUG] PASSING FRIDAY LIST TO PAGE")
+
+    context = {
+        "dates": friday_list
+    }
+
+    return render(request, 'Filter.html', context)
+
 
 
 # This is where the "heavy lifting" of the filtering process takes place.
@@ -38,7 +68,13 @@ def display_user_options(request):
     date_query = request.GET.get("search-box-exp")
 
     print("[DEBUG] SYMBOL:", symbol_query)
-    print("[DEBUG] DATE:", date_query)
+    print("[DEBUG] DATE:", date_query) # YYYY-MM-DD
+
+    date_format = "%A %B %d"
+    date = datetime.strptime(date_query, date_format)
+    date_correct_format = date.strftime("2023-%m-%d")
+
+    print("[DEBUG] DATE: ", date_correct_format)
 
     # get upper and lower bound for the price along with what type of search the user wants
     price_range_query = request.GET.get("price-range-select") # less than x, greater than x, or between x and y
@@ -80,7 +116,7 @@ def display_user_options(request):
     print("\n[DEBUG] RETRIEVING TRADIER DATA...")
 
     # get symbol, description, and options data from tradier API
-    context = tradier_data(symbol_query, date_query)
+    context = tradier_data(symbol_query, date_correct_format)
 
     valid_list = []
     
@@ -107,7 +143,6 @@ def display_user_options(request):
 
 # Fetch options chain from tradier API using symbol and expiration date as parameters
 # returns an API response in the form of a JSON
-# Expiration date is exact. A given date that's already passed or is too close to the current date may not provide sufficent results.
 def create_options_response(symbol, expiration):
     return requests.get('https://api.tradier.com/v1/markets/options/chains',
                         params={
@@ -140,7 +175,6 @@ def filter_options(options_data, max_price, min_price):
     valid_options_list = []
 
     # hard-coded filters:
-    min_volume = 2 # volume must be over 12
     min_open_interest = 44 # open interest must be over 44
     
     number = 0 # keep track of amount of valid options found
@@ -158,13 +192,9 @@ def filter_options(options_data, max_price, min_price):
             print("Error:", e)
         # print("[DEBUG] OPTION PRICE: ", options_data["options"]["option"][i]["ask"])
         # print("[DEBUG] Volume: ", options_data["options"]["option"][i]["volume"])
-        if (options_data["options"]["option"][i]["volume"] > min_volume) or (options_data["options"]["option"][i]["open_interest"] > min_open_interest) and (price < max_price and price > min_price): 
+        if (options_data["options"]["option"][i]["open_interest"] > min_open_interest) and (price < max_price and price > min_price): 
             print("[DEBUG] FOUND A VALID CALL OPTION")
 
-
-
-            
-            
             # extract relevant data
             number += 1
             strike = options_data["options"]["option"][i]["strike"]
@@ -184,14 +214,14 @@ def filter_options(options_data, max_price, min_price):
                 else:
                     description = company_data['securities']['security']['description']
             else:
-                print("[DEBUG] COMPANY DATA FETCH FAILED!!")
+                print("[ERROR] COMPANY DATA FETCH FAILED")
                 
             # create dictionary
             opt = {
-                'number' : number,
-                'symbol' : symbol,
+                'number' : 0,
                 'description' : description,
-                'price' : price,
+                'price' : ("$ %1.2f" % price),
+                'max price': ("$ %1.2f" % (price * 100)),
                 'strike price' : strike,
                 'volume': volume,
                 'expiration date' : exp,
@@ -201,6 +231,13 @@ def filter_options(options_data, max_price, min_price):
             valid_options_list.append(opt)
         else:
             print("[DEBUG] DID NOT FIND A VALID CALL OPTION")
+
+    # sort list of valid options by volume, high to low
+    valid_options_list = sorted(valid_options_list, key=lambda d: d['volume'], reverse=True)
+
+    # re-number options
+    for i in range (0, number):
+        valid_options_list[i]["number"] = i + 1 # numbering starts at 1, not 0
 
     return valid_options_list
 
