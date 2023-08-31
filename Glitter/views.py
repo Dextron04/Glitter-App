@@ -70,9 +70,12 @@ def display_user_options(request):
     print("[DEBUG] SYMBOL:", symbol_query)
     print("[DEBUG] DATE:", date_query) # YYYY-MM-DD
 
-    date_format = "%A %B %d"
-    date = datetime.strptime(date_query, date_format)
-    date_correct_format = date.strftime("2023-%m-%d")
+    if(str(date_query) != "None"):
+        date_format = "%A %B %d"
+        date = datetime.strptime(date_query, date_format)
+        date_correct_format = date.strftime("2023-%m-%d")
+    else:
+        date_correct_format = " "
 
     print("[DEBUG] DATE: ", date_correct_format)
 
