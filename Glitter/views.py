@@ -18,37 +18,8 @@ def display_home(request):
 def display_about(request):
     return render(request,'About.html')
     
-
 def handle_invalid_url(request, invalid_url):
     return render(request, 'error.html', {'error_message': f'The URL "{invalid_url}" is not valid.'})
-
-# Creates a list of available dates starting from the first upcoming friday
-def create_friday_list(request):
-    print("[DEBUG] CREATING FRIDAY LIST")
-    currentDate = date.today()
-
-    # increment until friday if it's not already friday
-    while currentDate.weekday() != 4:
-        currentDate += datetime.timedelta(days=1)
-    
-    friday_list = [currentDate.strftime("%A %B %d")]
-    for i in range(0, 19): # up to 20 weeks in advance
-        # add one week to date object
-        currentDate += datetime.timedelta(days=7)
-
-        # date format: %A = day of week, %B = month, %d = day of the month
-        readableDate = currentDate.strftime("%A %B %d")
-        print(readableDate)
-        friday_list.append(readableDate)
-
-    print("[DEBUG] PASSING FRIDAY LIST TO PAGE")
-
-    context = {
-        "dates": friday_list
-    }
-
-    return render(request, 'Filter.html', context)
-
 
 
 # This is where the "heavy lifting" of the filtering process takes place.
@@ -65,28 +36,19 @@ def display_user_options(request):
 
     # get symbol and date
     symbol_query = request.GET.get("search-box-ticker")
-    date_query = request.GET.get("search-box-exp")
+    date_query = request.GET.get("date-select")
 
     print("[DEBUG] SYMBOL:", symbol_query)
-    print("[DEBUG] DATE:", date_query) # YYYY-MM-DD
-
-    if(str(date_query) != "None"):
-        date_format = "%A %B %d"
-        date = datetime.strptime(date_query, date_format)
-        date_correct_format = date.strftime("2023-%m-%d")
-    else:
-        date_correct_format = " "
-
-    print("[DEBUG] DATE: ", date_correct_format)
+    print("[DEBUG] DATE:", date_query) # already in YYYY-MM-DD format
 
     # get upper and lower bound for the price along with what type of search the user wants
     price_range_query = request.GET.get("price-range-select") # less than x, greater than x, or between x and y
     price_query_one = request.GET.get("price-entry-one") # first text box
     price_query_two = request.GET.get("price-entry-two") # second text box, only used for the "between" selection
 
-    print("[DBUG] PRICE ENTRY ONE: ", price_query_one)
-    print("[DBUG] PRICE ENTRY TWO: ", price_query_two)
-    print("[DBUG] PRICE ENTRY RANGE: ", price_range_query)
+    print("[DEBUG] PRICE ENTRY ONE: ", price_query_one)
+    print("[DEBUG] PRICE ENTRY TWO: ", price_query_two)
+    print("[DEBUG] PRICE ENTRY RANGE: ", price_range_query)
 
 
     # price_range_query can be greater than value, less than value, or between values
@@ -119,7 +81,8 @@ def display_user_options(request):
     print("\n[DEBUG] RETRIEVING TRADIER DATA...")
 
     # get symbol, description, and options data from tradier API
-    context = tradier_data(symbol_query, date_correct_format)
+    # context = tradier_data(symbol_query, date_correct_format)
+    context = tradier_data(symbol_query, date_query)
 
     valid_list = []
     

@@ -50,10 +50,8 @@
     <div class="container-flex">
       <div class="input-container">
         <div class="input-row">
-
           <div for="search-box-ticker" class="symbol">
-            <input id="search-box-ticker" name="search-box-ticker" type="text" class="input"
-              placeholder="Choose Symbol">
+            <input id="search-box-ticker" name="search-box-ticker" type="text" class="input" placeholder="Choose Symbol">
             <select id="suggestionDropdown"></select>
           </div>
 
@@ -101,8 +99,6 @@
             });
           </script>
 
-
-
           <div class="price-container">
             <select class="select-price input" id="select-price" name="price-range-select" id="price-range-select">
               <option>Set a Price</option>
@@ -113,150 +109,51 @@
             <input class="input ticker" id="price-entry-one" name="price-entry-one" type="number" placeholder="no.">
             <input class="input ticker" id="price-entry-two" name="price-entry-two" style="display: none" type="number">
           </div>
-          
 
-          <div class="exp-date-scroll-container">
-            <!-- {% for d in dates %}
-              <div class="input">
-                <label>
-                  <input type="radio" name="search-box-exp" value="{{d}}" class="hidden-radio">
-                  {{d}}
-                </label><br/>
-              </div>
-            {% endfor %} -->
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday September 01" class="hidden-radio">
-                Friday September 01
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday September 08" class="hidden-radio">
-                Friday September 08
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday September 15" class="hidden-radio">
-                Friday September 15
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday September 22" class="hidden-radio">
-                Friday September 22
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday September 29" class="hidden-radio">
-                Friday September 29
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday October 06" class="hidden-radio">
-                Friday October 06
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday October 13" class="hidden-radio">
-                Friday October 13
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday October 20" class="hidden-radio">
-                Friday October 20
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday October 27" class="hidden-radio">
-                Friday October 27
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday November 03" class="hidden-radio">
-                Friday November 03
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday November 10" class="hidden-radio">
-                Friday November 10
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday November 17" class="hidden-radio">
-                Friday November 17
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday November 24" class="hidden-radio">
-                Friday November 24
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday December 01" class="hidden-radio">
-                Friday December 01
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday December 08" class="hidden-radio">
-                Friday December 08
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday December 15" class="hidden-radio">
-                Friday December 15
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday December 22" class="hidden-radio">
-                Friday December 22
-              </label><br>
-            </div>
-            <div>
-              <label class="input">
-                <input type="radio" name="search-box-exp" value="Friday December 29" class="hidden-radio">
-                Friday December 29
-              </label><br>
-            </div>
+          <script>
+            const dropdown = document.getElementById('select-price'); // Correct ID here
+            const priceTwo = document.getElementById('price-entry-two');
+    
+            dropdown.addEventListener('change', function () {
+              const selectedOption = dropdown.value;
+              if (selectedOption === 'price-between') {
+                priceTwo.style.display = ''; // Show the input field
+              } else {
+                priceTwo.style.display = 'none'; // Hide the input field
+              }
+            });
+          </script>
+
+          <div class="date-container">
+            <select class="date-select-dropdown input" id="date-select" name="date-select">
+              <option>Set an expiration date</option>
+            </select>
           </div>
 
-          <!-- <div for="search-box-exp" class="expdate">
-            <input id="search-box-exp" name="search-box-exp" type="date" class="input">
-          </div> -->
-        </div>
+          <script>
+            const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+            const currentDate = new Date();
+            const dateSelect = document.getElementById("date-select");
+
+            while(currentDate.getDay() != 5){
+              currentDate.setDate(currentDate.getDate() + 1);
+            }
+
+            for(let i = 0; i < 15; i++){
+              let currentOption = document.createElement("option");
+              currentOption.text = months[currentDate.getMonth()] + " " + currentDate.getDate();
+              currentOption.value = currentDate.toISOString().substring(0, 10); //YYYY-MM-DD
+
+              dateSelect.add(currentOption);
+              currentDate.setDate(currentDate.getDate() + 7);
+            }
+          </script>
+
+          <input type="submit" class="search-btn" value="Search">
       </div>
-
-      <input type="submit" class="search-btn" value="Search">
-
-      <script>
-        const dropdown = document.getElementById('select-price'); // Correct ID here
-        const priceTwo = document.getElementById('price-entry-two');
-
-        dropdown.addEventListener('change', function () {
-          const selectedOption = dropdown.value;
-          if (selectedOption === 'price-between') {
-            priceTwo.style.display = ''; // Show the input field
-          } else {
-            priceTwo.style.display = 'none'; // Hide the input field
-          }
-        });
-      </script>
     </div>
   </form>
+</div>
 
 
   <!-- TABLE NOT READY -->
