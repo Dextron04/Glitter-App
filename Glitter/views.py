@@ -3,8 +3,6 @@ from django.shortcuts import render
 import requests
 import json
 from django.core.paginator import Paginator
-import datetime
-from datetime import datetime, date
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
 
@@ -132,11 +130,11 @@ def create_company_response(symbol):
 
 # Given the entire options chain, narrow it down to options the user is interested in
 # options_data: entire options chain JSON (see optionsData.json)
-# max_price and min_price: the upper and lower bounds for a valid price
+# price_upperbound and price_lowerbound: the upper and lower bounds for a valid price
 # returns: a list of dictionaries containing an option's strike price, volume, expiration date, price, and number
-def filter_options(options_data, max_price, min_price):
+def filter_options(options_data, price_upperbound, price_lowerbound):
     # if max_price and min_price are equal, the user is looking for an exact price
-    print("[DEBUG] FILTERING WITH MAX PRICE: ", max_price, " AND MIN PRICE: ", min_price)
+    print("[DEBUG] FILTERING WITH MAX PRICE: ", price_upperbound, " AND MIN PRICE: ", price_lowerbound)
 
     valid_options_list = []
 
@@ -154,11 +152,12 @@ def filter_options(options_data, max_price, min_price):
             bid = float(options_data["options"]["option"][i]["bid"])
             ask = float(options_data["options"]["option"][i]["ask"])
             price = (bid + ask) / 2
+            max_price = price * 100
         except (ValueError, KeyError, TypeError) as e:
             print("Error:", e)
         # print("[DEBUG] OPTION PRICE: ", options_data["options"]["option"][i]["ask"])
         # print("[DEBUG] Volume: ", options_data["options"]["option"][i]["volume"])
-        if (options_data["options"]["option"][i]["open_interest"] > min_open_interest) and (price < max_price and price > min_price): 
+        if (options_data["options"]["option"][i]["open_interest"] > min_open_interest) and (max_price < price_upperbound and max_price > price_lowerbound): 
             print("[DEBUG] FOUND A VALID CALL OPTION")
 
             # extract relevant data
@@ -187,7 +186,7 @@ def filter_options(options_data, max_price, min_price):
                 'number' : 0,
                 'description' : description,
                 'price' : ("$ %1.2f" % price),
-                'max price': ("$ %1.2f" % (price * 100)),
+                'max price': ("$ %1.2f" % max_price),
                 'strike price' : strike,
                 'volume': volume,
                 'expiration date' : exp,
