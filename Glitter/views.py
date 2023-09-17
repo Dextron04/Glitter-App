@@ -8,16 +8,16 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
 
 
 def preTemplateView(request):
-    return render(request, 'Home.html')
+    return render(request, 'Glitter/Home.html')
 
 def display_home(request):
-    return render(request,'Home.html')
+    return render(request,'Glitter/Home.html')
 
 def display_about(request):
-    return render(request,'About.html')
+    return render(request,'Glitter/About.html')
     
 def handle_invalid_url(request, invalid_url):
-    return render(request, 'error.html', {'error_message': f'The URL "{invalid_url}" is not valid.'})
+    return render(request, 'Glitter/error.html', {'error_message': f'The URL "{invalid_url}" is not valid.'})
 
 
 # This is where the "heavy lifting" of the filtering process takes place.
@@ -128,7 +128,7 @@ def display_user_options(request):
     # print("\n[DEBUG] CONTEXT:", context)
     print("\n[DEBUG] RENDERING CONTEXT TO TEMPLATE")
     print("---------------------------------------------------------\n\n")
-    return render(request, 'Filter.html', context)
+    return render(request, 'Glitter/Filter.html', context)
 
 
 # Fetch options chain from tradier API using symbol and expiration date as parameters
