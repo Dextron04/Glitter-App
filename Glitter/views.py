@@ -75,49 +75,23 @@ def display_user_options(request):
         print("[ERROR] PRICE QUERY ONE EMPTY ")
         price_lowerbound = 0
         price_upperbound = 0
+    
+    print("\n[DEBUG] RETRIEVING TRADIER DATA...")
+
+    # get symbol, description, and options data from tradier API
+    # context = tradier_data(symbol_query, date_correct_format)
+    context = tradier_data(symbol_query, date_query)
 
     valid_list = []
+    
+    # filter options list
+    if(len(context['options_json']) != 0):
+        valid_list = filter_options(context['options_json'], price_upperbound, price_lowerbound)
 
-    # only run API request and filtering process if all search parameters exist. otherwise, fill table with empty cells.
-    if(symbol_query == "" or date_query == "" or price_lowerbound == 0 or price_upperbound == 0):
-        print("\n[DEBUG] SEARCH PARAMETERS INCOMPLETE")
+    # update context
+    context['valid_options'] = valid_list
 
-        # empty results
-        for i in range (0,5):
-            opt = {
-                'number' : " ",
-                'description' : " ",
-                'price' : " ",
-                'max price': " ",
-                'strike price': " ",
-                'volume': " ",
-                'expiration date': " ",
-                }
-
-            # append to valid options list
-            valid_list.append(opt)
-        
-        context = {
-            'valid_options' : valid_list,
-            'company_data' : " ",
-            'company_symbol' : " ",
-            'options_json' : {}
-        }
-    else:
-        print("\n[DEBUG] RETRIEVING TRADIER DATA...")
-
-        # get symbol, description, and options data from tradier API
-        # context = tradier_data(symbol_query, date_correct_format)
-        context = tradier_data(symbol_query, date_query)
-        
-        # filter options list
-        if(len(context['options_json']) != 0):
-            valid_list = filter_options(context['options_json'], price_upperbound, price_lowerbound)
-
-        # update context
-        context['valid_options'] = valid_list
-
-        print(len(valid_list))
+    print(len(valid_list))
 
     paginator = Paginator(valid_list, 10)  # 10 items per page
     page_number = request.GET.get('page')
