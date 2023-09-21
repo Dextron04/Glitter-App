@@ -89,6 +89,7 @@ def display_user_options(request):
     # filter options list
     if(len(context['options_json']) != 0):
         valid_list = filter_options(context['options_json'], price_upperbound, price_lowerbound)
+<<<<<<< HEAD
 
     # update context
     context['valid_options'] = valid_list
@@ -97,6 +98,13 @@ def display_user_options(request):
 
     with open('valid_list.json', 'r') as json_file:
         data = json.load(json_file)
+=======
+
+    # update context
+    context['valid_options'] = valid_list
+
+    print(len(valid_list))
+>>>>>>> parent of 3759a21 (Merge pull request #2 from Dextron04/development-branch)
 
     paginator = Paginator(data, 10)  # 10 items per page
     page_number = request.GET.get('page')
@@ -167,6 +175,9 @@ def filter_options(options_data, max_price, min_price):
         # print("[DEBUG] OPTION PRICE: ", options_data["options"]["option"][i]["ask"])
         # print("[DEBUG] Volume: ", options_data["options"]["option"][i]["volume"])
         if (options_data["options"]["option"][i]["volume"] > min_volume) or (options_data["options"]["option"][i]["open_interest"] > min_open_interest) and (price < max_price and price > min_price): 
+<<<<<<< HEAD
+>>>>>>> parent of 3759a21 (Merge pull request #2 from Dextron04/development-branch)
+=======
 >>>>>>> parent of 3759a21 (Merge pull request #2 from Dextron04/development-branch)
             print("[DEBUG] FOUND A VALID CALL OPTION")
 
@@ -201,8 +212,12 @@ def filter_options(options_data, max_price, min_price):
                 'symbol' : symbol,
                 'description' : description,
 <<<<<<< HEAD
+<<<<<<< HEAD
                 'price' : ("%1.2f" % price),
                 'max price': ("%1.2f" % max_price),
+=======
+                'price' : price,
+>>>>>>> parent of 3759a21 (Merge pull request #2 from Dextron04/development-branch)
 =======
                 'price' : price,
 >>>>>>> parent of 3759a21 (Merge pull request #2 from Dextron04/development-branch)
