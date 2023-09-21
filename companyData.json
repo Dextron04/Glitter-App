@@ -1,0 +1,10 @@
+{
+  "securities": {
+    "security": {
+      "symbol": "AMZN",
+      "exchange": "Q",
+      "type": "stock",
+      "description": "Amazon.com Inc"
+    }
+  }
+}

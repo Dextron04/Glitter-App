@@ -3,6 +3,16 @@ from django.shortcuts import render
 import requests
 import json
 from django.core.paginator import Paginator
+from django.db import models
+
+class GlitterModel(models.Model):
+    number = models.IntegerField()
+    description = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    max_price = models.DecimalField(max_digits=10, decimal_places=2)
+    strike_price = models.DecimalField(max_digits=10, decimal_places=2)
+    volume = models.IntegerField()
+    expiration_date = models.DateField()
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
 
@@ -82,6 +92,7 @@ def display_user_options(request):
     if(symbol_query == "" or date_query == "" or price_lowerbound == 0 or price_upperbound == 0):
         print("\n[DEBUG] SEARCH PARAMETERS INCOMPLETE")
 
+<<<<<<< HEAD
         # empty results
         for i in range (0,5):
             opt = {
@@ -118,8 +129,15 @@ def display_user_options(request):
         context['valid_options'] = valid_list
 
         print(len(valid_list))
+=======
+    print(len(valid_list))
+    debug_file_options(valid_list)
+>>>>>>> 61796cf (corrected the suggestions box)
 
-    paginator = Paginator(valid_list, 10)  # 10 items per page
+    with open('valid_list.json', 'r') as json_file:
+        data = json.load(json_file)
+
+    paginator = Paginator(data, 10)  # 10 items per page
     page_number = request.GET.get('page')
     paginated_options = paginator.get_page(page_number)
 
@@ -181,9 +199,7 @@ def filter_options(options_data, price_upperbound, price_lowerbound):
             max_price = price * 100
         except (ValueError, KeyError, TypeError) as e:
             print("Error:", e)
-        # print("[DEBUG] OPTION PRICE: ", options_data["options"]["option"][i]["ask"])
-        # print("[DEBUG] Volume: ", options_data["options"]["option"][i]["volume"])
-        if (options_data["options"]["option"][i]["open_interest"] > min_open_interest) and (max_price < price_upperbound and max_price > price_lowerbound): 
+        if (options_data["options"]["option"][i]["open_interest"] > min_open_interest) or (max_price < price_upperbound and max_price > price_lowerbound): 
             print("[DEBUG] FOUND A VALID CALL OPTION")
 
             # extract relevant data
@@ -211,8 +227,8 @@ def filter_options(options_data, price_upperbound, price_lowerbound):
             opt = {
                 'number' : 0,
                 'description' : description,
-                'price' : ("$ %1.2f" % price),
-                'max price': ("$ %1.2f" % max_price),
+                'price' : ("%1.2f" % price),
+                'max price': ("%1.2f" % max_price),
                 'strike price' : strike,
                 'volume': volume,
                 'expiration date' : exp,
@@ -342,3 +358,8 @@ def debug_file(options_data, company_data):
     json.dump(company_data, test_file_2, indent=2)
     test_file_2.close()
 
+def debug_file_options(valid_list):
+
+    test_file_3 = open("valid_list.json", "w")
+    json.dump(valid_list, test_file_3, indent=2)
+    test_file_3.close()
