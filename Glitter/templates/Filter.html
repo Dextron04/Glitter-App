@@ -51,19 +51,20 @@
       <div class="input-container">
         <div class="input-row">
           <div for="search-box-ticker" class="symbol">
-            <input id="search-box-ticker" name="search-box-ticker" type="text" class="input" placeholder="Choose Symbol">
+            <input id="search-box-ticker" name="search-box-ticker" type="text" class="input"
+              placeholder="Choose Symbol">
             <select id="suggestionDropdown"></select>
           </div>
 
           <script>
             const stockInput = document.getElementById('search-box-ticker');
-            // const suggestionBox = document.getElementById('suggestionBox');
             const suggestionDropdown = document.getElementById('suggestionDropdown');
 
             stockInput.addEventListener('input', async function () {
               const searchTerm = stockInput.value;
               console.log("Live Text: ", searchTerm);
-              // suggestionBox.innerHTML = '';
+
+              // Clear existing options in the select element
               suggestionDropdown.innerHTML = '';
 
               if (searchTerm.length > 0) {
@@ -78,18 +79,9 @@
                   const data = await response.json();
 
                   data.securities.security.forEach(item => {
-                    // const suggestionItem = document.createElement('div');
                     const option = document.createElement('option');
-                    option.innerText = item.symbol;
-                    option.classList.add('option');
-                    option.addEventListener('click', () => {
-                      stockInput.value = item.symbol;
-                      // suggestionBox.innerHTML = '';
-                      option.value = item.symbol;
-                    });
-
-                    // suggestionBox.appendChild(suggestionItem);
-
+                    option.value = item.symbol; // Set the value of the option
+                    option.innerText = item.symbol; // Set the text of the option
                     suggestionDropdown.appendChild(option);
                   });
                 } catch (error) {
@@ -97,6 +89,13 @@
                 }
               }
             });
+
+            // Listen for the change event on the select element
+            suggestionDropdown.addEventListener('change', function () {
+              // Set the input value to the selected option's value
+              stockInput.value = suggestionDropdown.value;
+            });
+
           </script>
 
           <div class="price-container">
@@ -113,7 +112,7 @@
           <script>
             const dropdown = document.getElementById('select-price'); // Correct ID here
             const priceTwo = document.getElementById('price-entry-two');
-    
+
             dropdown.addEventListener('change', function () {
               const selectedOption = dropdown.value;
               if (selectedOption === 'price-between') {
@@ -131,15 +130,15 @@
           </div>
 
           <script>
-            const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             const currentDate = new Date();
             const dateSelect = document.getElementById("date-select");
 
-            while(currentDate.getDay() != 5){
+            while (currentDate.getDay() != 5) {
               currentDate.setDate(currentDate.getDate() + 1);
             }
 
-            for(let i = 0; i < 15; i++){
+            for (let i = 0; i < 15; i++) {
               let currentOption = document.createElement("option");
               currentOption.text = months[currentDate.getMonth()] + " " + currentDate.getDate();
               currentOption.value = currentDate.toISOString().substring(0, 10); //YYYY-MM-DD
@@ -150,10 +149,10 @@
           </script>
 
           <input type="submit" class="search-btn" value="Search">
+        </div>
       </div>
-    </div>
   </form>
-</div>
+  </div>
 
 
   <!-- TABLE NOT READY -->

@@ -1,10 +1,18 @@
 {
   "securities": {
-    "security": {
-      "symbol": "AMZN",
-      "exchange": "Q",
-      "type": "stock",
-      "description": "Amazon.com Inc"
-    }
+    "security": [
+      {
+        "symbol": "AMD",
+        "exchange": "Q",
+        "type": "stock",
+        "description": "Advanced Micro Devices Inc"
+      },
+      {
+        "symbol": "AMDS",
+        "exchange": "Q",
+        "type": "etf",
+        "description": "GraniteShares 1x Short AMD Daily ETF"
+      }
+    ]
   }
 }
