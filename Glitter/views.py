@@ -5,29 +5,21 @@ import json
 from django.core.paginator import Paginator
 from django.db import models
 
-class GlitterModel(models.Model):
-    number = models.IntegerField()
-    description = models.CharField(max_length=255)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    max_price = models.DecimalField(max_digits=10, decimal_places=2)
-    strike_price = models.DecimalField(max_digits=10, decimal_places=2)
-    volume = models.IntegerField()
-    expiration_date = models.DateField()
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
 
 
 def preTemplateView(request):
-    return render(request, 'Glitter/Home.html')
+    return render(request, 'Home.html')
 
 def display_home(request):
-    return render(request,'Glitter/Home.html')
+    return render(request,'Home.html')
 
 def display_about(request):
-    return render(request,'Glitter/About.html')
+    return render(request,'About.html')
     
 def handle_invalid_url(request, invalid_url):
-    return render(request, 'Glitter/error.html', {'error_message': f'The URL "{invalid_url}" is not valid.'})
+    return render(request, 'error.html', {'error_message': f'The URL "{invalid_url}" is not valid.'})
 
 
 # This is where the "heavy lifting" of the filtering process takes place.
@@ -92,7 +84,6 @@ def display_user_options(request):
     if(symbol_query == "" or date_query == "" or price_lowerbound == 0 or price_upperbound == 0):
         print("\n[DEBUG] SEARCH PARAMETERS INCOMPLETE")
 
-<<<<<<< HEAD
         # empty results
         for i in range (0,5):
             opt = {
@@ -129,10 +120,6 @@ def display_user_options(request):
         context['valid_options'] = valid_list
 
         print(len(valid_list))
-=======
-    print(len(valid_list))
-    debug_file_options(valid_list)
->>>>>>> 61796cf (corrected the suggestions box)
 
     with open('valid_list.json', 'r') as json_file:
         data = json.load(json_file)
