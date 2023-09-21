@@ -51,6 +51,7 @@
     <div class="container-flex">
       <div class="input-container">
         <div class="input-row">
+
           <div for="search-box-ticker" class="symbol">
             <input id="search-box-ticker" name="search-box-ticker" type="text" class="input"
               placeholder="Choose Symbol">
@@ -100,6 +101,8 @@
 
           </script>
 
+
+
           <div class="price-container">
             <select class="select-price input" id="select-price" name="price-range-select" id="price-range-select">
               <option>Set a Price</option>
@@ -111,6 +114,7 @@
             <input class="input ticker" id="price-entry-two" name="price-entry-two" style="display: none" type="number">
           </div>
 
+<<<<<<< HEAD:Glitter/templates/Filter.html
           <script>
             const dropdown = document.getElementById('select-price'); // Correct ID here
             const priceTwo = document.getElementById('price-entry-two');
@@ -155,6 +159,31 @@
       </div>
   </form>
   </div>
+=======
+          <div for="search-box-exp" class="expdate">
+            <input id="search-box-exp" name="search-box-exp" type="date" class="input">
+          </div>
+        </div>
+      </div>
+
+      <input type="submit" class="search-btn" value="Search">
+
+      <script>
+        const dropdown = document.getElementById('select-price'); // Correct ID here
+        const priceTwo = document.getElementById('price-entry-two');
+
+        dropdown.addEventListener('change', function () {
+          const selectedOption = dropdown.value;
+          if (selectedOption === 'price-between') {
+            priceTwo.style.display = ''; // Show the input field
+          } else {
+            priceTwo.style.display = 'none'; // Hide the input field
+          }
+        });
+      </script>
+    </div>
+  </form>
+>>>>>>> parent of 3759a21 (Merge pull request #2 from Dextron04/development-branch):Glitter/templates/Glitter/Filter.html
 
 
   <!-- TABLE NOT READY -->
@@ -163,9 +192,9 @@
     <thead>
       <tr>
         <th>Results</th>
+        <th>Symbol</th>
         <th>Company</th>
         <th>Price</th>
-        <th>Max Price</th>
         <th>Strike-Price</th>
         <th>Volume</th>
         <th>Expiration Date</th>
