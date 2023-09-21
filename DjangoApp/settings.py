@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-g09*q+fg+l+ow%7vuh3&4pnw_m(w!ah2q!=k+(ts$3oqy!og%-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['45.33.51.90', '127.0.0.1']
+ALLOWED_HOSTS = ['45.33.51.90']
 
 
 # Application definition
@@ -56,7 +56,7 @@ ROOT_URLCONF = 'DjangoApp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/var/www/DjangoApp/Glitter/templates', '/Users/tushinkulshreshtha/Documents/GitHub/Glitter-App/Glitter/templates'],
+        'DIRS': ['/var/www/DjangoApp/Glitter/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
