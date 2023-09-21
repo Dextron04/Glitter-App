@@ -18,7 +18,6 @@ def display_home(request):
 def display_about(request):
     return render(request,'About.html')
     
-
 def handle_invalid_url(request, invalid_url):
     return render(request, 'error.html', {'error_message': f'The URL "{invalid_url}" is not valid.'})
 
@@ -37,19 +36,19 @@ def display_user_options(request):
 
     # get symbol and date
     symbol_query = request.GET.get("search-box-ticker")
-    date_query = request.GET.get("search-box-exp")
+    date_query = request.GET.get("date-select")
 
     print("[DEBUG] SYMBOL:", symbol_query)
-    print("[DEBUG] DATE:", date_query)
+    print("[DEBUG] DATE:", date_query) # already in YYYY-MM-DD format
 
     # get upper and lower bound for the price along with what type of search the user wants
     price_range_query = request.GET.get("price-range-select") # less than x, greater than x, or between x and y
     price_query_one = request.GET.get("price-entry-one") # first text box
     price_query_two = request.GET.get("price-entry-two") # second text box, only used for the "between" selection
 
-    print("[DBUG] PRICE ENTRY ONE: ", price_query_one)
-    print("[DBUG] PRICE ENTRY TWO: ", price_query_two)
-    print("[DBUG] PRICE ENTRY RANGE: ", price_range_query)
+    print("[DEBUG] PRICE ENTRY ONE: ", price_query_one)
+    print("[DEBUG] PRICE ENTRY TWO: ", price_query_two)
+    print("[DEBUG] PRICE ENTRY RANGE: ", price_range_query)
 
 
     # price_range_query can be greater than value, less than value, or between values
@@ -82,6 +81,7 @@ def display_user_options(request):
     print("\n[DEBUG] RETRIEVING TRADIER DATA...")
 
     # get symbol, description, and options data from tradier API
+    # context = tradier_data(symbol_query, date_correct_format)
     context = tradier_data(symbol_query, date_query)
 
     valid_list = []
@@ -89,22 +89,15 @@ def display_user_options(request):
     # filter options list
     if(len(context['options_json']) != 0):
         valid_list = filter_options(context['options_json'], price_upperbound, price_lowerbound)
-<<<<<<< HEAD
 
     # update context
     context['valid_options'] = valid_list
 
     print(len(valid_list))
+    debug_file_options(valid_list)
 
     with open('valid_list.json', 'r') as json_file:
         data = json.load(json_file)
-=======
-
-    # update context
-    context['valid_options'] = valid_list
-
-    print(len(valid_list))
->>>>>>> parent of 3759a21 (Merge pull request #2 from Dextron04/development-branch)
 
     paginator = Paginator(data, 10)  # 10 items per page
     page_number = request.GET.get('page')
@@ -120,7 +113,6 @@ def display_user_options(request):
 
 # Fetch options chain from tradier API using symbol and expiration date as parameters
 # returns an API response in the form of a JSON
-# Expiration date is exact. A given date that's already passed or is too close to the current date may not provide sufficent results.
 def create_options_response(symbol, expiration):
     return requests.get('https://api.tradier.com/v1/markets/options/chains',
                         params={
@@ -144,16 +136,15 @@ def create_company_response(symbol):
 
 # Given the entire options chain, narrow it down to options the user is interested in
 # options_data: entire options chain JSON (see optionsData.json)
-# max_price and min_price: the upper and lower bounds for a valid price
+# price_upperbound and price_lowerbound: the upper and lower bounds for a valid price
 # returns: a list of dictionaries containing an option's strike price, volume, expiration date, price, and number
-def filter_options(options_data, max_price, min_price):
+def filter_options(options_data, price_upperbound, price_lowerbound):
     # if max_price and min_price are equal, the user is looking for an exact price
-    print("[DEBUG] FILTERING WITH MAX PRICE: ", max_price, " AND MIN PRICE: ", min_price)
+    print("[DEBUG] FILTERING WITH MAX PRICE: ", price_upperbound, " AND MIN PRICE: ", price_lowerbound)
 
     valid_options_list = []
 
     # hard-coded filters:
-    min_volume = 2 # volume must be over 12
     min_open_interest = 44 # open interest must be over 44
     
     number = 0 # keep track of amount of valid options found
@@ -167,24 +158,12 @@ def filter_options(options_data, max_price, min_price):
             bid = float(options_data["options"]["option"][i]["bid"])
             ask = float(options_data["options"]["option"][i]["ask"])
             price = (bid + ask) / 2
+            max_price = price * 100
         except (ValueError, KeyError, TypeError) as e:
             print("Error:", e)
-<<<<<<< HEAD
         if (options_data["options"]["option"][i]["open_interest"] > min_open_interest) or (max_price < price_upperbound and max_price > price_lowerbound): 
-=======
-        # print("[DEBUG] OPTION PRICE: ", options_data["options"]["option"][i]["ask"])
-        # print("[DEBUG] Volume: ", options_data["options"]["option"][i]["volume"])
-        if (options_data["options"]["option"][i]["volume"] > min_volume) or (options_data["options"]["option"][i]["open_interest"] > min_open_interest) and (price < max_price and price > min_price): 
-<<<<<<< HEAD
->>>>>>> parent of 3759a21 (Merge pull request #2 from Dextron04/development-branch)
-=======
->>>>>>> parent of 3759a21 (Merge pull request #2 from Dextron04/development-branch)
             print("[DEBUG] FOUND A VALID CALL OPTION")
 
-
-
-            
-            
             # extract relevant data
             number += 1
             strike = options_data["options"]["option"][i]["strike"]
@@ -204,23 +183,14 @@ def filter_options(options_data, max_price, min_price):
                 else:
                     description = company_data['securities']['security']['description']
             else:
-                print("[DEBUG] COMPANY DATA FETCH FAILED!!")
+                print("[ERROR] COMPANY DATA FETCH FAILED")
                 
             # create dictionary
             opt = {
-                'number' : number,
-                'symbol' : symbol,
+                'number' : 0,
                 'description' : description,
-<<<<<<< HEAD
-<<<<<<< HEAD
                 'price' : ("%1.2f" % price),
                 'max price': ("%1.2f" % max_price),
-=======
-                'price' : price,
->>>>>>> parent of 3759a21 (Merge pull request #2 from Dextron04/development-branch)
-=======
-                'price' : price,
->>>>>>> parent of 3759a21 (Merge pull request #2 from Dextron04/development-branch)
                 'strike price' : strike,
                 'volume': volume,
                 'expiration date' : exp,
@@ -230,6 +200,13 @@ def filter_options(options_data, max_price, min_price):
             valid_options_list.append(opt)
         else:
             print("[DEBUG] DID NOT FIND A VALID CALL OPTION")
+
+    # sort list of valid options by volume, high to low
+    valid_options_list = sorted(valid_options_list, key=lambda d: d['volume'], reverse=True)
+
+    # re-number options
+    for i in range (0, number):
+        valid_options_list[i]["number"] = i + 1 # numbering starts at 1, not 0
 
     return valid_options_list
 
