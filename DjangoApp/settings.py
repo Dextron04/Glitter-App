@@ -56,7 +56,7 @@ ROOT_URLCONF = 'DjangoApp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/var/www/DjangoApp/Glitter/templates'],
+        'DIRS': ['/var/www/DjangoApp/Glitter/templates', 'Glitter/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
