@@ -106,18 +106,7 @@ We welcome contributions! To get started:
 - Push to the branch (`git push origin feature/your-feature`)
 - Open a Pull Request
 
-For major changes, please open an issue first to discuss what you would like to change.
-
----
-
-## 🙏 Credits
-
-- **Glitter Team**: [hi@glitterfund.xyz](mailto:hi@glitterfund.xyz)
-- **Tradier API** for market data
-- [FontAwesome](https://fontawesome.com/) for icons
-- Community feedback and support
-
----
+## For major changes, please open an issue first to discuss what you would like to change.
 
 ## ⚠️ Disclaimer
 
